@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Sqlite (Xerial) - recommendation_engine.db">
+  <database-model serializer="dbm" rdbms="SQLITE" format-version="2.6">
+    <schema id="1">
+      <visible>1</visible>
+    </schema>
+    <table id="2" parent="1" name="movies"/>
+    <table id="3" parent="1" name="ratings"/>
+    <column id="4" parent="2" name="movieId">
+      <data-type>NUMBER(0,-1)|6</data-type>
+    </column>
+    <column id="5" parent="2" name="title">
+      <data-type>TEXT(0,-1)|12</data-type>
+    </column>
+    <column id="6" parent="2" name="genres">
+      <data-type>TEXT(0,-1)|12</data-type>
+    </column>
+    <column id="7" parent="3" name="userId">
+      <data-type>NUMBER(0,-1)|6</data-type>
+    </column>
+    <column id="8" parent="3" name="movieId">
+      <data-type>NUMBER(0,-1)|6</data-type>
+    </column>
+    <column id="9" parent="3" name="rating">
+      <data-type>REAL(0,-1)|6</data-type>
+    </column>
+    <column id="10" parent="3" name="timestamp">
+      <data-type>NUMBER(0,-1)|6</data-type>
+    </column>
+  </database-model>
+</dataSource>
