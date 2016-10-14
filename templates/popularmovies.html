@@ -13,22 +13,72 @@
 </head>
 <body>
 <h4>Popular movies</h4>
-{% for movie in movies %}
+{% for i in range(0,movies|length,4) %}
     <div class="row">
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ movie["poster"] }}">
-                    <span class="card-title">{{ movie["name"] }}</span>
-                </div>
-                <div class="card-content">
-                    <p>{{ movie["overview"] }}</p>
-                </div>
-                <div class="card-action">
-                    <a href="#">IMDB</a>
+        {% if i < movies|length %}
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{ movies[i]["poster"] }}">
+                        <span class="card-title">{{ movies[i]["name"] }}</span>
+                    </div>
+                    <div class="card-content">
+                        <p>{{ movies[i]["overview"] }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ movies[i]["imdb"] }}">IMDB</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
+        {% if i + 1 < movies|length %}
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{ movies[i + 1]["poster"] }}">
+                        <span class="card-title">{{ movies[i + 1]["name"] }}</span>
+                    </div>
+                    <div class="card-content">
+                        <p>{{ movies[i + 1]["overview"] }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ movies[i + 1]["imdb"] }}">IMDB</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if i + 2 < movies|length %}
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{ movies[i + 2]["poster"] }}">
+                        <span class="card-title">{{ movies[i + 2]["name"] }}</span>
+                    </div>
+                    <div class="card-content">
+                        <p>{{ movies[i + 2]["overview"] }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ movies[i + 2]["imdb"] }}">IMDB</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if i + 3< movies|length %}
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{ movies[i + 3]["poster"] }}">
+                        <span class="card-title">{{ movies[i  + 3]["name"] }}</span>
+                    </div>
+                    <div class="card-content">
+                        <p>{{ movies[i + 3]["overview"] }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ movies[i + 3]["imdb"] }}">IMDB</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endfor %}
 </body>

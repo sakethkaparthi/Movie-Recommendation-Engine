@@ -7,12 +7,13 @@ import requests
 app = Flask(__name__)
 
 conn = sqlite3.connect('recommendation_engine.db')
-p = getPopularMovies(conn, 10)
+p = getPopularMovies(conn, 5)
 ids = []
 popular = []
 param = {'api_key': "d4dc650ab1e0ee61a3a4e17453f770f5"}
 info_link = "https://api.themoviedb.org/3/movie/"
 poster_path = "https://image.tmdb.org/t/p/w185"
+imdb_link = "http://www.imdb.com/title/{id}/"
 
 for i in range(len(p)):
     m = list(p[i])
@@ -21,7 +22,8 @@ for i in range(len(p)):
     r = requests.get(info_link + str(id), params=param)
     data = r.json()
     movie = {"name": data['original_title'], "overview": data['overview'],
-             "poster": str(poster_path + data['poster_path'])}
+             "poster": str(poster_path + data['poster_path']),
+             "imdb": imdb_link.format(id=data["imdb_id"])}
     print movie
     popular.append(movie)
 
