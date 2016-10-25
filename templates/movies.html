@@ -12,9 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-  <div class="card-panel red darken-3">
-    <h4>Popular movies</h4>
-  </div>
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/popular_movies" class="active">Popular</a></li>
+            <li><a href="/highest_rated">Highest Rated</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        </ul>
+    </div>
+</nav>
 {% for i in range(0,movies|length,4) %}
     <div class="row">
         {% if i < movies|length %}
@@ -24,70 +32,78 @@
                         <img class="activator" src="{{ movies[i]["poster"] }}">
                     </div>
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4">{{ movies[i]["name"] }}<i class="material-icons right">more_vert</i></span>
-                        <p><a href="{{ movies[i]["imdb"] }}">IMDB</a></p>
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                        <p><a href="{{ movies[i]["imdb"] }}" target="_blank">IMDB</a></p>
                     </div>
                     <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">{{ movies[i]["name"] }}<i class="material-icons right">close</i></span>
-                      <p>{{ movies[i]["overview"] }}</p>
+                        <span class="card-title grey-text text-darken-4">{{ movies[i]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                        <p>{{ movies[i]["overview"] }}</p>
                     </div>
                 </div>
             </div>
         {% endif %}
         {% if i + 1 < movies|length %}
             <div class="col s3">
-              <div class="card">
-                  <div class="card-image waves-effect waves-block waves-light">
-                      <img class="activator" src="{{ movies[i + 1]["poster"] }}">
-                  </div>
-                  <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i class="material-icons right">more_vert</i></span>
-                      <p><a href="{{ movies[i + 1]["imdb"] }}">IMDB</a></p>
-                  </div>
-                  <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i class="material-icons right">close</i></span>
-                      <p>{{ movies[i + 1]["overview"] }}</p>
-                  </div>
-              </div>
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ movies[i + 1]["poster"] }}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                        <p><a href="{{ movies[i + 1]["imdb"] }}" target="_blank">IMDB</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                        <p>{{ movies[i + 1]["overview"] }}</p>
+                    </div>
+                </div>
             </div>
         {% endif %}
         {% if i + 2 < movies|length %}
-          <div class="col s3">
-              <div class="card">
-                  <div class="card-image waves-effect waves-block waves-light">
-                      <img class="activator" src="{{ movies[i + 2]["poster"] }}">
-                  </div>
-                  <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i class="material-icons right">more_vert</i></span>
-                      <p><a href="{{ movies[i + 2]["imdb"] }}">IMDB</a></p>
-                  </div>
-                  <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i class="material-icons right">close</i></span>
-                    <p>{{ movies[i + 2]["overview"] }}</p>
-                  </div>
-              </div>
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ movies[i + 2]["poster"] }}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                        <p><a href="{{ movies[i + 2]["imdb"] }}" target="_blank">IMDB</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                        <p>{{ movies[i + 2]["overview"] }}</p>
+                    </div>
+                </div>
             </div>
         {% endif %}
         {% if i + 3< movies|length %}
-          <div class="col s3">
-              <div class="card">
-                  <div class="card-image waves-effect waves-block waves-light">
-                      <img class="activator" src="{{ movies[i + 3]["poster"] }}">
-                  </div>
-                  <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i class="material-icons right">more_vert</i></span>
-                      <p><a href="{{ movies[i + 3]["imdb"] }}">IMDB</a></p>
-                  </div>
-                  <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i class="material-icons right">close</i></span>
-                    <p>{{ movies[i + 3]["overview"] }}</p>
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ movies[i + 3]["poster"] }}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                        <p><a href="{{ movies[i + 3]["imdb"] }}" target="_blank">IMDB</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                        <p>{{ movies[i + 3]["overview"] }}</p>
+                    </div>
                 </div>
-              </div>
-          </div>
+            </div>
         {% endif %}
     </div>
 {% endfor %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 </body>
 </html>
