@@ -23,9 +23,7 @@ def pearsonCorrelation(person1, person2, ratingsDict):
         den_value = sqrt((person1_square_preferences_sum - pow(person1_preferences_sum, 2) / len(both_rated)) *
                          (person2_square_preferences_sum - pow(person2_preferences_sum, 2) / len(both_rated)))
     except:
-        print "Exception"
-        print person1_preferences_sum, person1_square_preferences_sum, person2_preferences_sum, person2_square_preferences_sum
-        pass
+        return 0
     if den_value == 0:
         return 0
     else:
