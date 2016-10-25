@@ -46,8 +46,29 @@ def popularmovies():
 
 
 @app.route('/highest_rated')
-def highestratedmovies():
-    return render_template('movies.html')
+def selectRatings():
+    return render_template('minimumratings.html')
+
+
+@app.route('/highest_rated/<int:number>')
+def highestratedMovies(number):
+    r = getHighestRatedMovies(conn, number, 10)
+    highest = []
+    for i in range(len(p)):
+        m = list(p[i])
+        id = getTmdbId(conn, m[0])
+        id = int(float((str(id[0])[1:-2])))
+        movie = movies.find_one({"id": id})
+        if not movie:
+            r = requests.get(info_link + str(id), params=param)
+            data = r.json()
+            movie = {"id": id, "name": data['original_title'], "overview": data['overview'],
+                     "poster": str(poster_path + data['poster_path']),
+                     "imdb": imdb_link.format(id=data["imdb_id"])}
+            movies.insert_one(movie)
+        print movie
+        highest.append(movie)
+    return render_template('movies.html', movies=highest)
 
 
 if __name__ == '__main__':

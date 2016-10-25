@@ -12,7 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<h4>Popular movies</h4>
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li class="active"><a href="/popular_movies">Popular</a></li>
+            <li><a href="/highest_rated">Highest Rated</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        </ul>
+    </div>
+</nav>
 {% for i in range(0,movies|length,4) %}
     <div class="row">
         {% if i < movies|length %}
