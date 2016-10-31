@@ -8,6 +8,15 @@ movieList = getRandomMovies(conn,200,15)
 for movie in movieList:
 	print movie[1]
 
+conn.execute("drop table if exists users")
+conn.commit()
+
+'''userlist = conn.execute("""select username from users""").fetchall()
+if(len(userlist)>0):
+	for user in userlist:
+		print user
+	input()'''
+
 ratingsDict = {}
 userIds = [str(i)[1:-2] for i in getUserIds(conn)]
 

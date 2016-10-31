@@ -9,9 +9,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-    <div class="card-panel red darken-3">
-      <h3>Login</h3>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% if session['logged-in'] %}
+                <li><a href="/">Welcome, {{ session['username'] }}</a></li>
+                <li class="active"><a href="/popular_movies">Popular</a></li>
+                <li><a href="/highest_rated">Highest Rated</a></li>
+                <li><a href="/logout">Logout</a></li>
+              {% else %}
+                <li class="active"><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+              {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+      <h3>Login To Use Our Service</h3>
+      <br>
+      {% if error|length > 0 %}
+      <p>{{ error }}</p>
+      {% endif %}
+      <form method=post action="/login">
+        {{form.hidden_tag()}}
+        {{form.username.label}} : {{form.username}}
+        <br>
+        {{form.password.label}} : {{form.password}}
+        <br>
+        {{form.login}}
+      </form>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   </body>
 </html>

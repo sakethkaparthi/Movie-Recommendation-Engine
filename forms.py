@@ -1,13 +1,13 @@
-from flask_wtf import Form
-from wtforms import StringField, BooleanField, PasswordField, SubmitField
+from flask_wtf import FlaskForm
+from wtforms import TextField, BooleanField, PasswordField, SubmitField
 from wtforms.validators import DataRequired,Length,EqualTo
 
-class SignUpForm(Form):
-    username = StringField('Username',[
+class SignUpForm(FlaskForm):
+    username = TextField('Username',[
     DataRequired(),
     Length(min=6, max=25)
     ])
-    email = StringField('Email Address',[
+    email = TextField('Email Address',[
     DataRequired(),
     Length(min=6,max=35)
     ])
@@ -20,8 +20,8 @@ class SignUpForm(Form):
     accept_tos = BooleanField('I accept the terms and conditions of service',[DataRequired()])
     submit = SubmitField("Sign Up")
 
-class LoginForm(Form):
-    username = StringField('Username',[
+class LoginForm(FlaskForm):
+    username = TextField('Username',[
         DataRequired(),
         Length(min=6, max=25)
     ])

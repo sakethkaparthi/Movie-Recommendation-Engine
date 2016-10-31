@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Recommendation Engine</title>
+    <title>Sign Up</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
@@ -14,19 +14,25 @@
 <body>
 <nav>
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo"><h4>Sign Up</h4></a>
+        <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/popular_movies">Popular</a></li>
+          {% if session['logged-in'] %}
+            <li><a href="/">Welcome, {{ session['username'] }}</a></li>
+            <li class="active"><a href="/popular_movies">Popular</a></li>
             <li><a href="/highest_rated">Highest Rated</a></li>
+            <li><a href="/logout">Logout</a></li>
+          {% else %}
             <li><a href="/login">Login</a></li>
             <li class="active"><a href="/signup">Sign Up</a></li>
+          {% endif %}
         </ul>
     </div>
 </nav>
 <div class="container">
   <h3>Sign Up For Our Service Today!</h3>
   <br>
-  <form action="/signup" method="POST">
+  <form action="/signup" method=post>
+    {{form.hidden_tag()}}
     {{form.username.label}} : {{form.username}}
     <br>
     {{form.email.label}} : {{form.email}}
@@ -37,13 +43,18 @@
     <br>
     {{ form.accept_tos(value='n') }} {{form.accept_tos.label}}
     <hr>
+    {{form.submit}}
+    <!--
      <button class="btn waves-effect waves-light" type="submit" name="action">{{form.submit}}
        <i class="material-icons right">send</i>
      </button>
+   -->
   </form>
   {% if error %}
     <p class="error"><strong>Error:</strong>{{error}}</p>
   {% endif %}
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 </body>
 </html>

@@ -16,13 +16,27 @@
     <div class="nav-wrapper">
         <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+          {% if session['logged-in'] %}
+            <li><a href="/">Welcome, {{ session['username'] }}</a></li>
             <li><a href="/popular_movies">Popular</a></li>
             <li><a href="/highest_rated">Highest Rated</a></li>
+            <li><a href="/logout">Logout</a></li>
+          {% else %}
             <li><a href="/login">Login</a></li>
             <li><a href="/signup">Sign Up</a></li>
+          {% endif %}
         </ul>
     </div>
 </nav>
 <h3>Welcome to the NetFlask</h3>
+<br>
+<h2>About the System</h2>
+<div class="container">
+  <p class="flow-text">
+  The NetFlask Recommender Engine uses a collaborative filtering algorithm to recommend movies.
+  The engine takes ratings already existing in the database (provided by other users) and ratings provided by the user him/herself
+  to rank movies according to a weighted Pearson Correlation Score and return a list of movies that the engine predicts the user will enjoy.
+  </p>
+</div>
 </body>
 </html>
