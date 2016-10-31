@@ -47,12 +47,13 @@ for i in range(len(p)):
     print movie
     popular.append(movie)
 
-session = {'logged-in':False, 'username':''}
+"""session['logged-in'] = False
+session['username'] = ''"""
 
 @app.route('/home')
 @app.route('/')
 def home():
-    print session['username']
+    print 'username' in session
     return render_template('home.html',session=session)
 
 @app.route('/logout')
@@ -61,7 +62,7 @@ def logout():
     session['username'] = ''
     return redirect(url_for('home'))
 
-@app.route('/popular_movies')
+@app.route('/popular_movies/')
 def popularmovies():
     return render_template('movies.html', movies=popular)
 
