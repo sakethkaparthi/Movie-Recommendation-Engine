@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <title>Recommendation Engine</title>
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <!-- Latest compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.rateit.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='js/rateit.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
@@ -51,6 +56,11 @@
                                 class="material-icons right">close</i></span>
                         <p>{{ movies[i]["overview"] }}</p>
                     </div>
+                    <div class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                         data-rateit-value="{{ movies[i]['rating'] }}"
+                         data-rateit-mode="font" style="font-size:50px">
+                    </div>
+
                 </div>
             </div>
         {% endif %}
@@ -70,6 +80,11 @@
                                 class="material-icons right">close</i></span>
                         <p>{{ movies[i + 1]["overview"] }}</p>
                     </div>
+                    <div class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                         data-rateit-value="{{ movies[i + 1]['rating'] }}"
+                         data-rateit-mode="font" style="font-size:50px">
+                    </div>
+
                 </div>
             </div>
         {% endif %}
@@ -89,6 +104,11 @@
                                 class="material-icons right">close</i></span>
                         <p>{{ movies[i + 2]["overview"] }}</p>
                     </div>
+                    <div class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                         data-rateit-value="{{ movies[i + 2]['rating'] }}"
+                         data-rateit-mode="font" style="font-size:50px">
+                    </div>
+
                 </div>
             </div>
         {% endif %}
@@ -108,6 +128,11 @@
                                 class="material-icons right">close</i></span>
                         <p>{{ movies[i + 3]["overview"] }}</p>
                     </div>
+                    <div class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                         data-rateit-value="{{ movies[i + 3]['rating'] }}"
+                         data-rateit-mode="font" style="font-size:50px">
+                    </div>
+
                 </div>
             </div>
         {% endif %}

@@ -17,11 +17,11 @@ conn = sqlite3.connect('recommendation_engine.db')
 db = client['movies-db']
 movies = db["movies"]
 
-conn.execute("""create table if not exists users
-(id integer primary key,
-username varchar(25) unique not null,
-email varchar(35) not null,
-password varchar(255) not null)""")
+conn.execute("""CREATE TABLE IF NOT EXISTS users
+(id INTEGER PRIMARY KEY,
+username VARCHAR(25) UNIQUE NOT NULL,
+email VARCHAR(35) NOT NULL,
+password VARCHAR(255) NOT NULL)""")
 conn.commit()
 
 p = getPopularMovies(conn, 50)
@@ -42,25 +42,29 @@ for i in range(len(p)):
         data = r.json()
         movie = {"id": id, "name": data['original_title'], "overview": data['overview'],
                  "poster": str(poster_path + data['poster_path']),
+                 "rating": m[2],
                  "imdb": imdb_link.format(id=data["imdb_id"])}
         movies.insert_one(movie)
-    #print movie
+    print movie
     popular.append(movie)
 
 """session['logged-in'] = False
 session['username'] = ''"""
 
+
 @app.route('/home')
 @app.route('/')
 def home():
     print 'username' in session
-    return render_template('home.html',session=session)
+    return render_template('home.html', session=session)
+
 
 @app.route('/logout')
 def logout():
     session['logged-in'] = False
     session['username'] = ''
     return redirect(url_for('home'))
+
 
 @app.route('/popular_movies/')
 def popularmovies():
@@ -89,48 +93,51 @@ def highestratedMovies(number):
         if not movie2:
             resp = requests.get(info_link + str(id2), params=param)
             data2 = resp.json()
-            #print data2
+            # print data2
             movie2 = {"id": id2, "name": data2['original_title'], "overview": data2['overview'],
-                     "poster": str(poster_path + data2['poster_path']),
-                     "imdb": imdb_link.format(id=data2["imdb_id"])}
+                      "poster": str(poster_path + data2['poster_path']),
+                      "rating": m2[2],
+                      "imdb": imdb_link.format(id=data2["imdb_id"])}
             movies.insert_one(movie2)
         print movie2
         highest.append(movie2)
     return render_template('movies.html', movies=highest)
 
-@app.route('/signup', methods=['GET','POST'])
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     try:
         form = SignUpForm(request.form)
-        #print(form.errors())
+        # print(form.errors())
         if form.validate_on_submit():
             print 'Hello'
             username = form.username.data
             email = form.email.data
             password = sha256_crypt.encrypt((str(form.password.data)))
-            existing_users = conn.execute("select * from users where username = ?",[username]).fetchall()
+            existing_users = conn.execute("SELECT * FROM users WHERE username = ?", [username]).fetchall()
             if len(existing_users) > 0:
                 flash("That username is already taken")
-                return render_template('signup.html',form=form)
+                return render_template('signup.html', form=form)
             else:
-                conn.execute("insert into users(username, email, password) VALUES(?,?,?)",[username,email,password])
+                conn.execute("INSERT INTO users(username, email, password) VALUES(?,?,?)", [username, email, password])
                 flash("Thank you for signing up")
                 session['logged-in'] = True
                 session['username'] = username
                 conn.commit()
                 return redirect(url_for('home'))
-        return render_template('signup.html',form=form)
+        return render_template('signup.html', form=form)
     except Exception as e:
         print(str(e))
-        return(str(e))
+        return (str(e))
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     try:
         form = LoginForm(request.form)
         error = ''
         if form.validate_on_submit():
-            data = conn.execute("select * from users where username = ?",[form.username.data]).fetchall()
+            data = conn.execute("SELECT * FROM users WHERE username = ?", [form.username.data]).fetchall()
             data = data[0][3]
             if sha256_crypt.verify(form.password.data, data):
                 session['logged-in'] = True
@@ -139,11 +146,12 @@ def login():
                 return redirect(url_for('home'))
             else:
                 error = 'Invalid credentials. Please try again.'
-        return render_template('login.html',form=form,error=error)
+        return render_template('login.html', form=form, error=error)
     except Exception as e:
         print(str(e))
         error = 'Invalid credentials. Please try again.'
-        return render_template('login.html',form=form,error=error)
+        return render_template('login.html', form=form, error=error)
+
 
 if __name__ == '__main__':
     app.run()
