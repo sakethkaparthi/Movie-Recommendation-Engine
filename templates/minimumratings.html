@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Recommendation Engine</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
@@ -26,29 +27,13 @@
 </nav>
 <!-- Dropdown Trigger -->
 <h5>Select Minimum number of Ratings</h5>
-{#<ul id='dropdown1' class='dropdown-content'>
+<ul id='dropdown1' class='dropdown-content'>
     <li><a href="/highest_rated/50">50</a></li>
     <li><a href="/highest_rated/100">100</a></li>
     <li><a href="/highest_rated/150">150</a></li>
-</ul>#}
+</ul>
 
 <!-- Dropdown Structure -->
-<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
-{#<div class="input-field col s12">
-    <select title="Select minimum ratings">
-        <option value="1"><a href="/highest_rated/50">50</a>  </option>
-        <option value="1"><a href="/highest_rated/100">100</a></option>
-        <option value="2"><a href="/highest_rated/150">150</a></option>
-    </select>
-    <label>Materialize Select</label>
-</div>#}
-<label>Browser Select</label>
-<button onclick="console.log('adasd')">Button</button>
-<select class="browser-default" onchange="testfunc()">
-    <option value="" disabled selected>Choose your option</option>
-    <option value="1"><a href="/highest_rated/50">50</a></option>
-    <option value="2"><a href="/highest_rated/100">100</a></option>
-    <option value="3"><a href="/highest_rated/150">150</a></option>
-</select>
+<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Choose</a>
 </body>
 </html>

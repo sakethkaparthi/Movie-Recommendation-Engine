@@ -44,7 +44,7 @@ for i in range(len(p)):
                  "poster": str(poster_path + data['poster_path']),
                  "imdb": imdb_link.format(id=data["imdb_id"])}
         movies.insert_one(movie)
-    print movie
+    #print movie
     popular.append(movie)
 
 """session['logged-in'] = False
@@ -64,6 +64,7 @@ def logout():
 
 @app.route('/popular_movies/')
 def popularmovies():
+    session['popular'] = True
     return render_template('movies.html', movies=popular)
 
 
@@ -74,22 +75,27 @@ def selectRatings():
 
 @app.route('/highest_rated/<int:number>')
 def highestratedMovies(number):
-    r = getHighestRatedMovies(conn, number, 10)
+    print "Here"
+    session['popular'] = False
+    rated = getHighestRatedMovies(conn, number, 10)
+    print rated
     highest = []
-    for i in range(len(p)):
-        m = list(p[i])
-        id = getTmdbId(conn, m[0])
-        id = int(float((str(id[0])[1:-2])))
-        movie = movies.find_one({"id": id})
-        if not movie:
-            r = requests.get(info_link + str(id), params=param)
-            data = r.json()
-            movie = {"id": id, "name": data['original_title'], "overview": data['overview'],
-                     "poster": str(poster_path + data['poster_path']),
-                     "imdb": imdb_link.format(id=data["imdb_id"])}
-            movies.insert_one(movie)
-        print movie
-        highest.append(movie)
+    for j in range(len(rated)):
+        m2 = list(rated[j])
+        id2 = getTmdbId(conn, m2[0])
+        id2 = int(float((str(id2[0])[1:-2])))
+        print id2
+        movie2 = movies.find_one({"id": id2})
+        if not movie2:
+            resp = requests.get(info_link + str(id2), params=param)
+            data2 = resp.json()
+            #print data2
+            movie2 = {"id": id2, "name": data2['original_title'], "overview": data2['overview'],
+                     "poster": str(poster_path + data2['poster_path']),
+                     "imdb": imdb_link.format(id=data2["imdb_id"])}
+            movies.insert_one(movie2)
+        print movie2
+        highest.append(movie2)
     return render_template('movies.html', movies=highest)
 
 @app.route('/signup', methods=['GET','POST'])
