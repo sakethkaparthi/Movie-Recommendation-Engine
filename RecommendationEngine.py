@@ -9,6 +9,7 @@ from forms import *
 from pymongo import MongoClient
 import sqlite3
 import requests
+import time
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -151,6 +152,19 @@ def login():
         print(str(e))
         error = 'Invalid credentials. Please try again.'
         return render_template('login.html', form=form, error=error)
+
+
+def nameToInt(username):
+    return str(int(''.join([str(ord(x)) for x in list(username)])))[0::4]
+
+
+@app.route('/rate', methods=['GET', 'POST'])
+def rate():
+    if request.method == 'POST':
+        username = request.form['username']
+        movieId = request.form['id']
+        rating = request.form['rating']
+        addRating(conn, nameToInt(username), str(movieId), str(rating), str(int(time.time())))
 
 
 if __name__ == '__main__':
