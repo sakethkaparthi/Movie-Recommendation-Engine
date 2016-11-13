@@ -46,7 +46,7 @@ for i in range(len(p)):
                  "rating": m[2],
                  "imdb": imdb_link.format(id=data["imdb_id"])}
         movies.insert_one(movie)
-    print movie
+    # print movie
     popular.append(movie)
 
 """session['logged-in'] = False
@@ -100,7 +100,7 @@ def highestratedMovies(number):
                       "rating": m2[2],
                       "imdb": imdb_link.format(id=data2["imdb_id"])}
             movies.insert_one(movie2)
-        print movie2
+        # print movie2
         highest.append(movie2)
     return render_template('movies.html', movies=highest)
 
@@ -165,6 +165,36 @@ def rate():
         movieId = request.form['id']
         rating = request.form['rating']
         addRating(conn, nameToInt(username), str(movieId), str(rating), str(int(time.time())))
+    elif request.method == 'GET':
+        pass
+
+
+@app.route('/user')
+def user_page():
+    if 'username' not in session.keys() or session['username'] == '':
+        error = "Please login"
+        return render_template('user.html', error=error)
+    else:
+        user_rated_movies = getUserRatings(conn, nameToInt(session['username']))
+        user_movies = []
+        for k in range(len(user_rated_movies)):
+            try:
+                mo = list(user_rated_movies[k])
+                mid = mo[0]
+                movieu = movies.find_one({"uid": mid})
+                if not movieu:
+                    ru = requests.get(info_link + str(mid), params=param)
+                    datau = ru.json()
+                    movieu = {"uid": mid, "name": datau['original_title'], "overview": datau['overview'],
+                              "poster": str(poster_path + datau['poster_path']),
+                              "rating": mo[1],
+                              "imdb": imdb_link.format(id=datau["imdb_id"])}
+                    movies.insert_one(movieu)
+                # print movie
+                user_movies.append(movieu)
+            except:
+                pass
+    return render_template('user.html', error='', movies=user_movies)
 
 
 if __name__ == '__main__':

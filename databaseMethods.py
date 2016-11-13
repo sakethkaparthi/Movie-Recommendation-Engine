@@ -38,7 +38,7 @@ def getUserIds(conn):
 
 
 def getUserRatings(conn, userId):
-    return conn.execute("""select movieId,rating
+    return conn.execute("""select DISTINCT movieId,rating
     from ratings
     where userId = """ + str(userId)).fetchall()
 

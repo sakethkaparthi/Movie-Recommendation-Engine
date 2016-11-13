@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.rateit.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='js/rateit.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Profile</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><h4>NetFlask</h4></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% if session['logged-in'] %}
+                <li class="active"><a href="/user">{{ session['username'] }}</a></li>
+                <li><a href="/popular_movies">Popular</a></li>
+                <li><a href="/highest_rated">Highest Rated</a></li>
+                <li><a href="/logout">Logout</a></li>
+            {% else %}
+                <li class="active"><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% if error|length > 0 %}
+    <p>{{ error }}</p>
+{% else %}
+    <p>Your ratings:</p>
+    {% for i in range(movies|length) %}
+        <div class="row" style="margin:1px">
+            <div class="col s8">
+                <div class="card">
+                    <div class="col s5">
+                        <b>{{ movies[i]["name"] }}</b>
+                    </div>
+                    <div class="col s1" style="text-align: right">
+                        {{ movies[i]["rating"] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+</body>
+</html>
