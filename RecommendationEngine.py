@@ -6,6 +6,7 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from databaseMethods import *
 from forms import *
+from dbtest import *
 from pymongo import MongoClient
 import sqlite3
 import requests
@@ -194,7 +195,26 @@ def user_page():
                 user_movies.append(movieu)
             except:
                 pass
-    return render_template('user.html', error='', movies=user_movies)
+
+        recommended_movies = []
+        p = getUserRecommendations(nameToInt(session['username']), conn)
+        for i in range(len(p)):
+            m = list(p[i])
+            id = getTmdbId(conn, m[0])
+            id = int(float((str(id[0])[1:-2])))
+            movie = movies.find_one({"id": id})
+            if not movie:
+                r = requests.get(info_link + str(id), params=param)
+                data = r.json()
+                movie = {"id": id, "name": data['original_title'], "overview": data['overview'],
+                         "poster": str(poster_path + data['poster_path']),
+                         "rating": (data['vote_average'] / 2),
+                         "imdb": imdb_link.format(id=data["imdb_id"])}
+                movies.insert_one(movie)
+            print movie
+            recommended_movies.append(movie)
+
+    return render_template('user.html', error='', umovies=user_movies, movies=recommended_movies)
 
 
 if __name__ == '__main__':

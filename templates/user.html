@@ -38,18 +38,122 @@
     <p>{{ error }}</p>
 {% else %}
     <p>Your ratings:</p>
-    {% for i in range(movies|length) %}
+    {% for i in range(umovies|length) %}
         <div class="row" style="margin:1px">
             <div class="col s8">
                 <div class="card">
                     <div class="col s5">
-                        <b>{{ movies[i]["name"] }}</b>
+                        <b>{{ umovies[i]["name"] }}</b>
                     </div>
                     <div class="col s1" style="text-align: right">
-                        {{ movies[i]["rating"] }}
+                        {{ umovies[i]["rating"] }}
                     </div>
                 </div>
             </div>
+        </div>
+    {% endfor %}
+    <p>Based on your ratings, You may also like:</p>
+    {% for i in range(0,movies|length,4) %}
+        <div class="row">
+            {% if i < movies|length %}
+                <div class="col s3">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="{{ movies[i]["poster"] }}">
+                        </div>
+                        <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                            <p><a href="{{ movies[i]["imdb"] }}" target="_blank">IMDB</a></p>
+                        </div>
+                        <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                            <p>{{ movies[i]["overview"] }}</p>
+                        </div>
+                        <div id="rateit{{ i }}" class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                             data-rateit-value="{{ movies[i]['rating'] }}"
+                             data-rateit-mode="font" style="font-size:50px"
+                        >
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+            {% if i + 1 < movies|length %}
+                <div class="col s3">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="{{ movies[i + 1]["poster"] }}">
+                        </div>
+                        <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                            <p><a href="{{ movies[i + 1]["imdb"] }}" target="_blank">IMDB</a></p>
+                        </div>
+                        <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 1]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                            <p>{{ movies[i + 1]["overview"] }}</p>
+                        </div>
+                        <div id="rateit{{ i + 1 }}" class="rateit" data-rateit-step="1" data-rateit-resetable="false"
+                             data-rateit-value="{{ movies[i + 1]['rating'] }}"
+                             data-rateit-mode="font" style="font-size:50px">
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+            {% if i + 2 < movies|length %}
+                <div class="col s3">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="{{ movies[i + 2]["poster"] }}">
+                        </div>
+                        <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                            <p><a href="{{ movies[i + 2]["imdb"] }}" target="_blank">IMDB</a></p>
+                        </div>
+                        <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 2]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                            <p>{{ movies[i + 2]["overview"] }}</p>
+                        </div>
+                        <div id="rateit{{ i + 2 }}" class="rateit" id="rateit{{ i + 2 }}" data-rateit-step="1"
+                             data-rateit-resetable="false"
+                             data-rateit-value="{{ movies[i + 2]['rating'] }}"
+                             data-rateit-mode="font" style="font-size:50px">
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+            {% if i + 3< movies|length %}
+                <div class="col s3">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="{{ movies[i + 3]["poster"] }}">
+                        </div>
+                        <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i
+                                class="material-icons right">more_vert</i></span>
+                            <p><a href="{{ movies[i + 3]["imdb"] }}" target="_blank">IMDB</a></p>
+                        </div>
+                        <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ movies[i + 3]["name"] }}<i
+                                class="material-icons right">close</i></span>
+                            <p>{{ movies[i + 3]["overview"] }}</p>
+                        </div>
+                        <div id="rateit{{ i  + 3 }}" class="rateit" id="rateit{{ i  + 3 }}" data-rateit-step="1"
+                             data-rateit-resetable="false"
+                             data-rateit-value="{{ movies[i + 3]['rating'] }}"
+                             data-rateit-mode="font" style="font-size:50px">
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endif %}
