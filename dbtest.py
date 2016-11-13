@@ -1,39 +1,49 @@
 import sqlite3
+
 from databaseMethods import *
 from computations import *
 
-conn = sqlite3.connect('recommendation_engine.db')
 
-movieList = getRandomMovies(conn,200,15)
-for movie in movieList:
-	print movie[1]
+def getUserRecommendations(userid, conn):
 
-conn.execute("drop table if exists users")
-conn.commit()
+    movieList = getUserRatings(conn,userid)
+    for movie in movieList:
+        print movie[0],movie[1]
 
-'''userlist = conn.execute("""select username from users""").fetchall()
-if(len(userlist)>0):
-	for user in userlist:
-		print user
-	input()'''
+    '''conn.execute("drop table if exists users")
+    conn.commit()
+    '''
 
-ratingsDict = {}
-userIds = [str(i)[1:-2] for i in getUserIds(conn)]
+    '''userlist = conn.execute("""select username from users""").fetchall()
+    if(len(userlist)>0):
+        for user in userlist:
+            print user
+        input()'''
 
-for userId in userIds:
-    ratingsDict[str(userId)] = dict(getUserRatings(conn,userId))
+    ratingsDict = {}
+    userIds = [str(i)[1:-2] for i in getUserIds(conn)]
 
-ratingsDict['New User'] = dict([(movie[0],float("{0:.1f}".format(movie[3]))) for movie in movieList])
+    for userId in userIds:
+        ratingsDict[str(userId)] = dict(getUserRatings(conn, userId))
 
-print 'User ratings map created'
+    ratingsDict[userid] = dict([(movie[0], float("{0:.1f}".format(movie[1]))) for movie in movieList])
+    print ratingsDict[userid]
+    print 'User ratings map created'
 
-recommendations = userRecommendations('New User',ratingsDict)
+    recommendations = userRecommendations(userid, ratingsDict)
 
-for recommendation in recommendations:
-	if recommendation[1] < 5:
-		break
-	print getTitlefromId(conn,recommendation[0]),recommendation[1]
+    '''for recommendation in recommendations[0:20]:
+        if recommendation[1] < 5:
+            break
+        #print getTitlefromId(conn, recommendation[0]), recommendation[1]
+        print recommendation'''
+    return recommendations[0:20]
 
-'''
-for userId in userIds:
-    print getUserRatings(conn,userId)'''
+    '''
+    for userId in userIds:
+        print getUserRatings(conn,userId)'''
+
+if __name__ == '__main__':
+    userid = raw_input("Enter the user id")
+    conn = sqlite3.connect('recommendation_engine.db')
+    getUserRecommendations(userid,conn)
