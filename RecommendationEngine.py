@@ -192,7 +192,7 @@ def user_page():
                               "imdb": imdb_link.format(id=datau["imdb_id"])}
                     movies.insert_one(movieu)
                 # print movie
-                user_movies.append(movieu)
+            	user_movies.append(movieu)
             except:
                 pass
 
