@@ -43,11 +43,19 @@ def getUserRatings(conn, userId):
     where userId = """ + str(userId)).fetchall()
 
 
-def addRating(conn, userId, movieId, rating, time):
-    conn.execute("insert into ratings VALUES(" + userId
-                 + "," + movieId + ","
-                 + rating + "," + time + ");")
-    conn.commit()
+def addRating(conn, userId, movieId, rating, time):        
+    cursor = conn.execute("select * from ratings where userId = " + userId + " and movieId =" + movieId).fetchall()
+    if len(cursor) > 0:
+        conn.execute("update ratings set rating = " + rating 
+            + ",timestamp = " + time 
+            + " where userId =" + userId 
+            + " and movieId = " + movieId + ";")
+        conn.commit()
+    else:
+        conn.execute("insert into ratings VALUES(" + userId 
+            + "," + movieId + ","
+            + rating + "," + time + ");")
+        conn.commit()
 
 
 def getTitlefromId(conn, movieId):
