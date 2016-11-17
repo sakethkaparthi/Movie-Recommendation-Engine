@@ -1,3 +1,10 @@
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+db = client['movies-db']
+movies = db["movies"]
+
+
 def getPopularMovies(conn, limit):
     return conn.execute("""select movies.movieId,title,avg(rating) as rate,count(rating) as cnt from movies
 	inner join ratings on movies.movieId = ratings.movieId
@@ -43,18 +50,20 @@ def getUserRatings(conn, userId):
     where userId = """ + str(userId)).fetchall()
 
 
-def addRating(conn, userId, movieId, rating, time):        
+def addRating(conn, userId, movieId, rating, time):
     cursor = conn.execute("select * from ratings where userId = " + userId + " and movieId =" + movieId).fetchall()
     if len(cursor) > 0:
-        conn.execute("update ratings set rating = " + rating 
-            + ",timestamp = " + time 
-            + " where userId =" + userId 
-            + " and movieId = " + movieId + ";")
+        conn.execute("update ratings set rating = " + rating
+                     + ",timestamp = " + time
+                     + " where userId =" + userId
+                     + " and movieId = " + movieId + ";")
         conn.commit()
+        result = movies.update_one({'uid': int(movieId)}, {'$set': {'rating': float(rating) }})
+        print result.matched_count, result.modified_count
     else:
-        conn.execute("insert into ratings VALUES(" + userId 
-            + "," + movieId + ","
-            + rating + "," + time + ");")
+        conn.execute("insert into ratings VALUES(" + userId
+                     + "," + movieId + ","
+                     + rating + "," + time + ");")
         conn.commit()
 
 
