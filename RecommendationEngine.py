@@ -83,7 +83,7 @@ def selectRatings():
 def highestratedMovies(number):
     print "Here"
     session['popular'] = False
-    rated = getHighestRatedMovies(conn, number, 10)
+    rated = getHighestRatedMovies(conn, number, 24)
     print rated
     highest = []
     for j in range(len(rated)):

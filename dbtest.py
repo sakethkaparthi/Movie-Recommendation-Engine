@@ -44,16 +44,16 @@ def getUserRecommendations(userid, conn):
         print getUserRatings(conn,userId)'''
 
 if __name__ == '__main__':
-    #userid = raw_input("Enter the user id")
+    userid = raw_input("Enter the user id")
     conn = sqlite3.connect('recommendation_engine.db')
-    #getUserRecommendations(userid,conn)
+    getUserRecommendations(userid,conn)
 
     cursor = conn.execute("SELECT sql FROM sqlite_master WHERE tbl_name='ratings' AND type='table'")
     for col in cursor:
         print col
-    #input()
+    """"#input()
     cursor = conn.execute("SELECT * FROM ratings ORDER BY timestamp")
     for row in cursor:
         print row
     #conn.execute("DELETE FROM ratings WHERE timestamp > 1452404919;")
-    conn.commit()
+    conn.commit()"""
